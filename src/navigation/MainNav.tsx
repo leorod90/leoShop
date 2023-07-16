@@ -4,7 +4,7 @@ import TabNav, { TabProps } from './TabNav';
 
 export type StackProps = {
   Tab: NavigatorScreenParams<TabProps>;
-  Details: undefined;
+  Auth: undefined;
 }
 
 const Stack = createStackNavigator();
@@ -13,7 +13,7 @@ export default function MainStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }} >
       <Stack.Screen name="Tab" component={TabNav} />
-      <Stack.Screen name="Details" component={ExampleScreen} />
+      <Stack.Screen name="Auth" component={ExampleScreen} />
     </Stack.Navigator>
   );
 }
