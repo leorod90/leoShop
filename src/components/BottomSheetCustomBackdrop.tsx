@@ -6,10 +6,14 @@ import Animated, {
   useAnimatedStyle,
 } from "react-native-reanimated";
 import { BlurView } from "@react-native-community/blur";
+import { Pressable } from "react-native";
 
 const AnimatedBlurView = Animated.createAnimatedComponent(BlurView)
+interface Props extends BottomSheetBackdropProps {
+  onPress: () => void;
+};
 
-const BottomSheetCustomBackdrop = ({ animatedIndex, style }: BottomSheetBackdropProps) => {
+const BottomSheetCustomBackdrop = ({ animatedIndex, style, onPress }: Props) => {
   // animated variables
   console.log(animatedIndex)
   const containerAnimatedStyle = useAnimatedStyle(() => ({
@@ -47,7 +51,9 @@ const BottomSheetCustomBackdrop = ({ animatedIndex, style }: BottomSheetBackdrop
     // animatedProps={blurViewProps}
     // reducedTransparencyFallbackColor="white" 
     style={containerStyle}
-  />;
+  >
+    <Pressable style={{ flex: 1 }} onPress={onPress} />
+  </AnimatedBlurView>
 };
 
 export default BottomSheetCustomBackdrop;
