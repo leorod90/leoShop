@@ -41,7 +41,7 @@ export default function HomeScreen() {
   const closePresentModal = useCallback(() => {
     bottomSheetModalRef.current?.close();
   }, []);
-  const handleSheetChanges = useCallback((index: number) => {
+  const handleSheetChanges = useCallback(( index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
 
