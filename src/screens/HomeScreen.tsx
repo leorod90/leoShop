@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo, useCallback } from 'react'
+import React, { useRef, useState, useMemo, useCallback, useEffect } from 'react'
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
 import WrapperView from '../components/WrapperView';
 import useThemeColors from '../themes/useThemeColors';
@@ -35,13 +35,28 @@ export default function HomeScreen() {
   const snapPoints = useMemo(() => ['50%', '80%'], []);
   const [categoryIndex, setCategoryIndex] = useState(0)
 
+  useEffect(() => {
+    const fetchdata = async () => {
+      try {
+        const response = await fetch('https://fakestoreapi.com/products?limit=10');
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchdata();
+  }, [])
+
+
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
   const closePresentModal = useCallback(() => {
     bottomSheetModalRef.current?.close();
   }, []);
-  const handleSheetChanges = useCallback(( index: number) => {
+  const handleSheetChanges = useCallback((index: number) => {
     console.log('handleSheetChanges', index);
   }, []);
 
