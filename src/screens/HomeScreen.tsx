@@ -35,13 +35,14 @@ export default function HomeScreen() {
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => ['50%', '80%'], []);
   const [categoryIndex, setCategoryIndex] = useState(0)
+  const [fetchData, setFetchData] = useState([])
 
   useEffect(() => {
     const fetchdata = async () => {
       try {
         const response = await fetch('https://fakestoreapi.com/products?limit=10');
         const data = await response.json();
-        console.log(data);
+        setFetchData(data)
       } catch (error) {
         console.log(error);
       }
@@ -126,8 +127,8 @@ export default function HomeScreen() {
         renderItem={({ item, index }: any) => <Tab item={item} isSelected={index === categoryIndex} setCategoryIndex={() => setCategoryIndex(index)} />}
       />
       <MasonryList
-        data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]}
-        keyExtractor={(item): string => item}
+        data={fetchData}
+        keyExtractor={(item): string => item.id}
         numColumns={2}
         showsVerticalScrollIndicator={false}
         renderItem={({ item, i }) => <CardItem item={item} i={i} handlePresentModalPress={handlePresentModalPress} />}
@@ -149,8 +150,18 @@ export default function HomeScreen() {
   )
 }
 
+type Product = {
+  id: number,
+  title: string
+  price: string
+  category: string
+  description: string
+  image: string
+};
+
+
 type CardItemProps = {
-  item: any,
+  item: Product,
   i: number,
   handlePresentModalPress: () => void
 }
@@ -167,7 +178,7 @@ const CardItem = ({ item, i, handlePresentModalPress }: CardItemProps) => {
       overflow: 'hidden'
     }}>
       <Image
-        source={{ uri: MASONARY_IMAGE }}
+        source={{ uri: item?.image }}
         resizeMode='cover'
         style={StyleSheet.absoluteFill}
       />
@@ -202,11 +213,11 @@ const CardItem = ({ item, i, handlePresentModalPress }: CardItemProps) => {
         >
           <BlurView
             style={StyleSheet.absoluteFill}
-            blurType='light'
+            blurType='dark'
             blurAmount={5}
             reducedTransparencyFallbackColor="white"
           />
-          <Text style={{ flex: 1, fontSize: 12, color: "#fff", fontWeight: '600' }}>$100.00</Text>
+          <Text style={{ flex: 1, fontSize: 12, color: "#fff", fontWeight: '600' }}>${item?.price}</Text>
           <View
             style={{
               backgroundColor: '#fff',
