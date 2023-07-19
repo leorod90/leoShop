@@ -14,7 +14,7 @@ export default function WrapperView({ children, bg = null }: Props) {
     <ScrollView style={{
       backgroundColor: bg ?? background, flex: 1, paddingHorizontal: 24,
     }}>
-      <SafeAreaView style={{ gap: 24, paddingVertical: 24 }}>{children}</SafeAreaView>
+      <SafeAreaView style={{ flex: 1, gap: 24, paddingVertical: 24 }}>{children}</SafeAreaView>
     </ScrollView>
   )
 }
